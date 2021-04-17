@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://unpkg.com/mustard-ui@latest/dist/css/mustard-ui.min.css">
+  <link rel="stylesheet" href="normalize.css">
+  <link rel="stylesheet" href="style.css">
+  <title>ToDo application</title>
+</head>
+<body>
+  <div class="page-container">
+
+    <header id="header" class="header">
+
+      <div class="header__search">
+        <a href="index.html">
+          <img class="header__logo" src="./img/logo.svg" alt="Senla logo">
+        </a>
+        <input type="text" class="search" id="toDoSearch" placeholder="Search task for to do">
+      </div>
+
+      <nav class="nav">
+        <ul class="nav__tabs">
+          <li id="allTasks" data-f="all" class="nav__tab active-tab"><span>All</span></li>
+          <li id="activeTasks" data-f="active" class="nav__tab"><span>Active</span></li>
+          <li id="doneTasks" data-f="done" class="nav__tab"><span>Done</span></li>
+        </ul>
+      </nav>
+
+    </header>
+
+    <section class="add-container">
+      <label for="inputTask" class="input-label">New task</label>  
+      <textarea id="inputTask" class="todo-input" placeholder="Enter new task..."></textarea>   
+      <button onclick="newElement()" class="add-button">ADD</button>
+    </section>
+
+    <ul id="todoList" class="todo-list">
+      <li class="todo active"><span>Сделать что-то</span></li>
+      <li class="todo done"><span>Наколоть дров</span></li>
+      <li class="todo active"><span>Выучить весь JS</span></li>
+    </ul>
+    
+  </div>
+
+  <script src="search.js"></script>
+  <script src="todo.js"></script>
+  </body>
+</html>
