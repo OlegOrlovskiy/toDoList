@@ -120,11 +120,12 @@ function renderTodo(todo) {
     list.append(node);
   }
 
-  // filter for todo list
+  // filter for todo list with mouse
   const filterBox = document.querySelectorAll('.todo');
   const filterActiveBtn = document.querySelectorAll('.nav__tab');
+  const navigationTabs = document.querySelector('nav');
 
-  document.querySelector('nav').addEventListener('click', event => {
+  navigationTabs.addEventListener('click', event => {
     if (event.target.tagName !== 'LI') return false;
     let filterClass = event.target.dataset['f'];
 
@@ -144,6 +145,37 @@ function renderTodo(todo) {
       }
     });
   });
+
+  // filter for todo list with keyboard
+  navigationTabs.addEventListener('keypress', event => {
+    if (event.key === 13 || event.key === 32){
+      let filterClass = event.target.dataset['f'];
+
+      // add or remover border for Active Tab
+      filterActiveBtn.forEach(elem => {
+        elem.classList.remove('active-tab');
+        if (elem == event.target){
+          elem.classList.add('active-tab');
+        }
+      });
+
+      // show or hide to do Tasks
+      filterBox.forEach(elem => {
+        elem.classList.remove('hide');
+        if (!elem.classList.contains('todo--'+filterClass) && filterClass !== 'all') {
+          elem.classList.add('hide');
+        }
+      });
+    }  
+  });
+
+  list.addEventListener('keypress', event => {
+    if (event.key === 13 || event.key === 32) {
+      const itemKey = event.target.dataset.key;
+      toggleDone(itemKey);
+    } 
+  });
+
 }
 
 // Select the entire list

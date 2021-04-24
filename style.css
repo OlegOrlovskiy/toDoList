@@ -101,11 +101,14 @@ body {
   transition: border-top opacity 0.2s ease-in;
 }
 
-.nav__tab:hover{
+.nav__tab:hover,
+.nav__tab:focus{
 border-top: 4px solid rgba(47,128,237, 0.6);
 border-bottom: 4px solid transparent;
-opacity: 0.9;
+opacity: 1;
+outline: none;
 }
+
 
 .active-tab {
   border-top: 4px solid rgba(47,128,237, 1);
