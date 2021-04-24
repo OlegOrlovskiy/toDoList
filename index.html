@@ -4,12 +4,15 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://unpkg.com/mustard-ui@latest/dist/css/mustard-ui.min.css">
+<!--   <link rel="stylesheet" href="https://unpkg.com/mustard-ui@latest/dist/css/mustard-ui.min.css"> -->
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="normalize.css">
   <link rel="stylesheet" href="style.css">
   <title>ToDo application</title>
 </head>
 <body>
+  <!-- <h1>ToDo app</h1> -->
   <div class="page-container">
 
     <header id="header" class="header">
@@ -23,9 +26,9 @@
 
       <nav class="nav">
         <ul class="nav__tabs">
-          <li id="allTasks" data-f="all" class="nav__tab active-tab"><span>All</span></li>
-          <li id="activeTasks" data-f="active" class="nav__tab"><span>Active</span></li>
-          <li id="doneTasks" data-f="done" class="nav__tab"><span>Done</span></li>
+          <li id="allTasks" data-f="all" class="nav__tab active-tab" tabindex="0">All</li>
+          <li id="activeTasks" data-f="active" class="nav__tab" tabindex="0">Active</li>
+          <li id="doneTasks" data-f="done" class="nav__tab" tabindex="0">Done</li>
         </ul>
       </nav>
 
@@ -33,19 +36,14 @@
 
     <section class="add-container">
       <label for="inputTask" class="input-label">New task</label>  
-      <textarea id="inputTask" class="todo-input" placeholder="Enter new task..."></textarea>   
-      <button onclick="newElement()" class="add-button">ADD</button>
+      <textarea id="inputTask" class="todo-input" aria-label="Enter a new todo task" placeholder="Enter a new task..."></textarea>   
+      <button type="button" class="add-button">ADD</button>
     </section>
 
-    <ul id="todoList" class="todo-list">
-      <li class="todo active"><span>Сделать что-то</span></li>
-      <li class="todo done"><span>Наколоть дров</span></li>
-      <li class="todo active"><span>Выучить весь JS</span></li>
-    </ul>
-    
+    <ul id="todoList" class="todo-list"></ul>    
   </div>
 
-  <script src="search.js"></script>
-  <script src="todo.js"></script>
+  <script src="./app/src/search.js"></script>
+  <script src="./app/src/todo.js"></script>
   </body>
 </html>

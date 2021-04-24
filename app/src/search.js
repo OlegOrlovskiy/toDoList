@@ -1,7 +1,6 @@
 document.querySelector('#toDoSearch').oninput = function () {
   let val = this.value.trim().toLowerCase();
   let tasks = document.querySelectorAll('.todo span');
-  console.log(tasks);
   if (val != '') {
     tasks.forEach(function (elem){
       if (elem.innerText.toLowerCase().search(val) == -1) {
