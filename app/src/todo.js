@@ -178,17 +178,20 @@ function renderTodo(todo) {
   node.setAttribute('data-key', todo.id);
   // Set the contents of the `li` element created above
   node.innerHTML = `
-    <span class="todo_text">${todo.text}</span>
-    <div class="todo__btns-container" tabindex="-1">
+    <div div class="todo__btns-container" tabindex="-1">
       <button type ="buttom" class="btn-importance ${btnImportantColor}" tabindex="0">${btnImportantText}</button>
       <button type ="buttom" class="btn-delete" tabindex="0" aria-label="Delete to-do"></button>
     </div>
+    <span class="todo_text">${todo.text}</span>    
   `;
 	
   // If the item already exists in the DOM
   if (item) {
     // replace it
-    list.replaceChild(node, item);
+    if (node.classList.contains('todo--done')){
+      node.querySelector('.btn-importance').classList.add('hide');  
+    }
+    list.replaceChild(node, item);    
   } else {
     // otherwise append it to the end of the list
     list.append(node);
@@ -202,7 +205,7 @@ const list = document.querySelector('#todoList');
 function todoInteraction(event){
   if (event.type === 'click' || (event.type === 'keypress' && (event.key === 'Enter' || event.key === ' '))){
     if (event.target.classList.contains('todo')) {
-      const itemKey = event.target.dataset.key;
+      const itemKey = event.target.dataset.key;      
       toggleDone(itemKey);
     } else if (event.target.classList.contains('todo_text')) {
       const itemKey = event.target.parentElement.dataset.key;
