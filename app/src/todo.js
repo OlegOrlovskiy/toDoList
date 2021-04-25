@@ -7,7 +7,7 @@ search.addEventListener('input', function () {
   let val = this.value.trim().toLowerCase();
   let tasks = document.querySelectorAll('.todo span');
   if (val != '') {
-    tasks.forEach(function (elem){
+    tasks.forEach(elem => {
       if (elem.innerText.toLowerCase().search(val) == -1) {
         elem.parentElement.classList.add('hide');
         elem.innerHTML = elem.innerText;
@@ -16,7 +16,7 @@ search.addEventListener('input', function () {
       }
     });
   } else {
-    tasks.forEach(function (elem) {
+    tasks.forEach(elem => {
       elem.parentElement.classList.remove('hide');
       elem.innerHTML = elem.innerText;
     });
@@ -108,26 +108,10 @@ function filterTodo(){
 function filterTabs(tabs){
   const filterActiveBtn = document.querySelectorAll('.nav__tab');
 
-	tabs.addEventListener('click', event => {
-    if (event.target.tagName !== 'LI') return false;
-    form.classList.remove('hide')
-    filterClass = event.target.dataset.f;
-
-    // add or remove border for Active Tab
-    filterActiveBtn.forEach(elem => {
-      elem.classList.remove('nav__tab--active');
-      if (elem == event.target){
-        elem.classList.add('nav__tab--active');
-        if (filterClass === 'done') {
-          form.classList.add('hide');
-        }
-      }
-    });
-    filterTodo();	
-  });
-
-  tabs.addEventListener('keypress', event => {
-    if (event.key === 'Enter' || event.key === ' '){
+  function toggleActiveTab(event){
+    if (event.type === 'click' || (event.type === 'keypress' && (event.key === 'Enter' || event.key === ' '))){
+      if (event.target.tagName !== 'LI') return false;
+      form.classList.remove('hide');      
       filterClass = event.target.dataset.f;
 
       // add or remove border for Active Tab
@@ -135,16 +119,23 @@ function filterTabs(tabs){
         elem.classList.remove('nav__tab--active');
         if (elem == event.target){
           elem.classList.add('nav__tab--active');
+          if (filterClass === 'done') {
+            form.classList.add('hide');
+          }
         }
       });
-      filterTodo();
-    }
-  });
+      filterTodo();      
+    }  
+  } 
+
+  tabs.addEventListener('click', toggleActiveTab);
+  tabs.addEventListener('keypress', toggleActiveTab);
 }
 
 const tabs = document.querySelectorAll('.nav__tab');
 
 function defaultFilterBtns(Btns) { // данная функция устанавливает переключатель фильтра в положение ALL и запускает фильтр
+  form.classList.remove('hide');
   Btns.forEach(elem => {    
     elem.dataset.f === 'all' ? elem.classList.add('nav__tab--active') : elem.classList.remove('nav__tab--active');
   })
