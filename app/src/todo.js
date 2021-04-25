@@ -1,14 +1,12 @@
-'use strict';
-
 const search = document.querySelector('#toDoSearch');
 
 search.addEventListener('input', function () {
   defaultFilterBtns(tabs);
-  let val = this.value.trim().toLowerCase();
-  let tasks = document.querySelectorAll('.todo span');
-  if (val != '') {
+  const val = this.value.trim().toLowerCase();
+  const tasks = document.querySelectorAll('.todo span');
+  if (val !== '') {
     tasks.forEach((elem) => {
-      if (elem.innerText.toLowerCase().search(val) == -1) {
+      if (elem.innerText.toLowerCase().search(val) === -1) {
         elem.parentElement.classList.add('hide');
         elem.innerHTML = elem.innerText;
       } else {
@@ -96,7 +94,7 @@ function filterTodo() {
   const filterBox = document.querySelectorAll('.todo');
   filterBox.forEach((elem) => {
     elem.classList.remove('hide');
-    if (!elem.classList.contains('todo--' + filterClass) && filterClass !== 'all') {
+    if (!elem.classList.contains(`todo--${filterClass}`) && filterClass !== 'all') {
       elem.classList.add('hide');
     }
   });
@@ -204,7 +202,7 @@ function renderTodo(todo) {
 // Select the entire list
 const list = document.querySelector('#todoList');
 
-//Add a click event listener to the list and its children
+// Add a click event listener to the list and its children
 function todoInteraction(event) {
   if (
     event.type === 'click' ||
