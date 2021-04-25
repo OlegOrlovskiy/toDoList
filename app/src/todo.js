@@ -192,42 +192,38 @@ function renderTodo(todo) {
   } else {
     // otherwise append it to the end of the list
     list.append(node);
-  }
-  
+  }  
 }
 
 // Select the entire list
 const list = document.querySelector('#todoList');
-// Add a click event listener to the list and its children
-list.addEventListener('click', event => {
-  if (event.target.classList.contains('todo')) {
-    const itemKey = event.target.dataset.key;
-    toggleDone(itemKey);
-  } else if (event.target.classList.contains('todo_text')) {
-    const itemKey = event.target.parentElement.dataset.key;
-    toggleDone(itemKey);
-  } 
-   
-  if (event.target.classList.contains('btn-delete')) {
-    const itemKey = event.target.closest('.todo').dataset.key;
-    deleteTodo(itemKey);
+
+//Add a click event listener to the list and its children
+function todoInteraction(event){
+  if (event.type === 'click' || (event.type === 'keypress' && (event.key === 'Enter' || event.key === ' '))){
+    if (event.target.classList.contains('todo')) {
+      const itemKey = event.target.dataset.key;
+      toggleDone(itemKey);
+    } else if (event.target.classList.contains('todo_text')) {
+      const itemKey = event.target.parentElement.dataset.key;
+      toggleDone(itemKey);
+    } 
+     
+    if (event.target.classList.contains('btn-delete')) {
+      const itemKey = event.target.closest('.todo').dataset.key;
+      deleteTodo(itemKey);
+    }
+  
+    if (event.target.classList.contains('btn-importance')) {
+      const itemKey = event.target.closest('.todo').dataset.key;
+      toggleImportance(itemKey);
+    }
+    filterTodo();
   }
+}
 
-  if (event.target.classList.contains('btn-importance')) {
-    const itemKey = event.target.closest('.todo').dataset.key;
-    toggleImportance(itemKey);
-  }
-  filterTodo();
-});
-
-// add Enter and Space Event for todo item
-list.addEventListener('keypress', event => {
-  if (event.key === 'Enter' || event.key === ' ') {
-    const itemKey = event.target.dataset.key;
-    toggleDone(itemKey);
-  } 
-});
-
+list.addEventListener('click', todoInteraction);
+list.addEventListener('keypress', todoInteraction);
 
 // load information from LocalStarage
 document.addEventListener('DOMContentLoaded', () => {
