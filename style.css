@@ -22,16 +22,12 @@ html {
 }
 
 body {
-  min-height: 100vh;  
+  min-height: 95vh;  
   background: url(./img/background.svg);
   background-repeat: no-repeat;
   background-position: right 5% bottom 15%;
   background-attachment: fixed;
 }
-
-/* *:focus {
-  border: 1px solid rgb(47, 128, 237);
-} */
 
 .page-container {
   margin: 25px;
@@ -59,6 +55,7 @@ body {
 }
 
 .search {
+  width: 100%;
   background: url(img/Search.svg) 12px 50%/20px 21px no-repeat, linear-gradient(0deg, #F6F6F6, #F6F6F6), #FEFEFE;;
   padding: 10px 40px;
   font-size: 1rem;
@@ -95,6 +92,7 @@ body {
   align-items: center;  
   color: #53565A;
   opacity: 0.5;
+  border-top: 4px solid rgba(47,128,237, 0);
 }
 
 .nav__tabs li {
@@ -109,8 +107,8 @@ opacity: 1;
 outline: none;
 }
 
-
-.active-tab {
+.nav__tab--active,
+.nav__tab--active:focus {
   border-top: 4px solid rgba(47,128,237, 1);
   border-bottom: 4px solid transparent;
   font-weight: 900;
@@ -188,7 +186,7 @@ outline: none;
 }
 
 .todo span {
-  display: inline-block;
+  display: inline-block; 
   white-space: pre-wrap;
 }
 
@@ -206,7 +204,7 @@ outline: none;
 }
 
 .todo__btns-container {
- display: none; 
+ display: none;
 }
 
 .todo:hover .todo__btns-container,
@@ -302,12 +300,13 @@ border: 1px solid rgb(47, 128, 237);
 	animation:anim 2s linear;
 } */
 
-.todo {  
+.todo,
+.add-container {  
   animation-name: slideRight;
   -webkit-animation-name: slideRight; 
 
-  animation-duration: 2s; 
-  -webkit-animation-duration: 2s;
+  animation-duration: 1.2s; 
+  -webkit-animation-duration: 1.2s;
 
   animation-timing-function: ease-in-out; 
   -webkit-animation-timing-function: ease-in-out;     
@@ -359,4 +358,14 @@ border: 1px solid rgb(47, 128, 237);
       opacity: 1;
       -webkit-transform: translateX(0%);
   }
+}
+
+.visually-hidden {
+  position: absolute;
+  clip: rect(0 0 0 0);
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  border: 0;
+  overflow: hidden;
 }

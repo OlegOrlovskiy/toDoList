@@ -1,3 +1,29 @@
+"use strict";
+
+const search = document.querySelector('#toDoSearch');
+
+search.addEventListener('input', function () {  
+  defaultFilterBtns(tabs);
+  let val = this.value.trim().toLowerCase();
+  let tasks = document.querySelectorAll('.todo span');
+  if (val != '') {
+    tasks.forEach(function (elem){
+      if (elem.innerText.toLowerCase().search(val) == -1) {
+        elem.parentElement.classList.add('hide');
+        elem.innerHTML = elem.innerText;
+      } else {
+        elem.parentElement.classList.remove('hide');
+      }
+    });
+  } else {
+    tasks.forEach(function (elem) {
+      elem.parentElement.classList.remove('hide');
+      elem.innerHTML = elem.innerText;
+    });
+  }
+});
+
+
 // block for adding items
 
 let todoItems = [];
@@ -50,7 +76,7 @@ function deleteTodo(key) {
 
 
 const addBtn = document.querySelector('.add-button');
-// Select the form element
+// Select the input block
 const form = document.querySelector('.add-container');
 // Add a submit event listener
 addBtn.addEventListener('click', () => { 
@@ -66,7 +92,64 @@ addBtn.addEventListener('click', () => {
   }
 });
 
+const navigationTabs = document.querySelector('nav');
+let filterClass = "all";
 
+function filterTodo(){
+  const filterBox = document.querySelectorAll('.todo');
+  filterBox.forEach(elem => {
+    elem.classList.remove('hide');
+    if (!elem.classList.contains('todo--'+filterClass) && filterClass !== 'all') {
+      elem.classList.add('hide');
+    } 
+  });  
+}
+
+function filterTabs(tabs){
+  const filterActiveBtn = document.querySelectorAll('.nav__tab');
+
+	tabs.addEventListener('click', event => {
+    if (event.target.tagName !== 'LI') return false;
+    form.classList.remove('hide')
+    filterClass = event.target.dataset.f;
+
+    // add or remove border for Active Tab
+    filterActiveBtn.forEach(elem => {
+      elem.classList.remove('nav__tab--active');
+      if (elem == event.target){
+        elem.classList.add('nav__tab--active');
+        if (filterClass === 'done') {
+          form.classList.add('hide');
+        }
+      }
+    });
+    filterTodo();	
+  });
+
+  tabs.addEventListener('keypress', event => {
+    if (event.key === 'Enter' || event.key === ' '){
+      filterClass = event.target.dataset.f;
+
+      // add or remove border for Active Tab
+      filterActiveBtn.forEach(elem => {
+        elem.classList.remove('nav__tab--active');
+        if (elem == event.target){
+          elem.classList.add('nav__tab--active');
+        }
+      });
+      filterTodo();
+    }
+  });
+}
+
+const tabs = document.querySelectorAll('.nav__tab');
+
+function defaultFilterBtns(Btns) { // данная функция устанавливает переключатель фильтра в положение ALL и запускает фильтр
+  Btns.forEach(elem => {    
+    elem.dataset.f === 'all' ? elem.classList.add('nav__tab--active') : elem.classList.remove('nav__tab--active');
+  })
+  filterTodo();
+}
 
 // adding todo to html
 function renderTodo(todo) {
@@ -105,10 +188,10 @@ function renderTodo(todo) {
   // Set the contents of the `li` element created above
   node.innerHTML = `
     <span class="todo_text">${todo.text}</span>
-        <div class="todo__btns-container" tabindex="-1">
-          <button type ="buttom" class="btn-importance ${btnImportantColor}" tabindex="0">${btnImportantText}</button>
-          <button type ="buttom" class="btn-delete" tabindex="0"></button>
-        </div>
+    <div class="todo__btns-container" tabindex="-1">
+      <button type ="buttom" class="btn-importance ${btnImportantColor}" tabindex="0">${btnImportantText}</button>
+      <button type ="buttom" class="btn-delete" tabindex="0" aria-label="Delete to-do"></button>
+    </div>
   `;
 	
   // If the item already exists in the DOM
@@ -119,63 +202,7 @@ function renderTodo(todo) {
     // otherwise append it to the end of the list
     list.append(node);
   }
-
-  // filter for todo list with mouse
-  const filterBox = document.querySelectorAll('.todo');
-  const filterActiveBtn = document.querySelectorAll('.nav__tab');
-  const navigationTabs = document.querySelector('nav');
-
-  navigationTabs.addEventListener('click', event => {
-    if (event.target.tagName !== 'LI') return false;
-    let filterClass = event.target.dataset['f'];
-
-    // add or remover border for Active Tab
-    filterActiveBtn.forEach(elem => {
-      elem.classList.remove('active-tab');
-      if (elem == event.target){
-        elem.classList.add('active-tab');
-      }
-    });
-
-    // show or hide to do Tasks
-    filterBox.forEach(elem => {
-      elem.classList.remove('hide');
-      if (!elem.classList.contains('todo--'+filterClass) && filterClass !== 'all') {
-        elem.classList.add('hide');
-      }
-    });
-  });
-
-  // filter for todo list with keyboard
-  navigationTabs.addEventListener('keypress', event => {
-    if (event.key === 13 || event.key === 32){
-      let filterClass = event.target.dataset['f'];
-
-      // add or remover border for Active Tab
-      filterActiveBtn.forEach(elem => {
-        elem.classList.remove('active-tab');
-        if (elem == event.target){
-          elem.classList.add('active-tab');
-        }
-      });
-
-      // show or hide to do Tasks
-      filterBox.forEach(elem => {
-        elem.classList.remove('hide');
-        if (!elem.classList.contains('todo--'+filterClass) && filterClass !== 'all') {
-          elem.classList.add('hide');
-        }
-      });
-    }  
-  });
-
-  list.addEventListener('keypress', event => {
-    if (event.key === 13 || event.key === 32) {
-      const itemKey = event.target.dataset.key;
-      toggleDone(itemKey);
-    } 
-  });
-
+  
 }
 
 // Select the entire list
@@ -199,11 +226,12 @@ list.addEventListener('click', event => {
     const itemKey = event.target.closest('.todo').dataset.key;
     toggleImportance(itemKey);
   }
+  filterTodo();
 });
 
 // add Enter and Space Event for todo item
 list.addEventListener('keypress', event => {
-  if (event.keyCode === 13 || event.keyCode === 32) {
+  if (event.key === 'Enter' || event.key === ' ') {
     const itemKey = event.target.dataset.key;
     toggleDone(itemKey);
   } 
@@ -220,3 +248,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 });
+
+filterTabs(navigationTabs);
+defaultFilterBtns(tabs);

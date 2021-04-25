@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<!--   <link rel="stylesheet" href="https://unpkg.com/mustard-ui@latest/dist/css/mustard-ui.min.css"> -->
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="normalize.css">
@@ -12,38 +11,37 @@
   <title>ToDo application</title>
 </head>
 <body>
-  <!-- <h1>ToDo app</h1> -->
+  <h1 class="visually-hidden">ToDo app. Create your own to-do list</h1>
   <div class="page-container">
-
     <header id="header" class="header">
-
       <div class="header__search">
         <a href="index.html">
           <img class="header__logo" src="./img/logo.svg" alt="Senla logo">
         </a>
-        <input type="text" class="search" id="toDoSearch" placeholder="Search task for to do">
+        <label for="toDoSearch">
+          <span class="visually-hidden">Search task for to do</span>        
+          <input type="text" class="search" id="toDoSearch" placeholder="Search task for to do">
+        </label>
       </div>
 
+      <h2 class="visually-hidden">Navigate through your to-do tasks</h2>
       <nav class="nav">
         <ul class="nav__tabs">
-          <li id="allTasks" data-f="all" class="nav__tab active-tab" tabindex="0">All</li>
+          <li id="allTasks" data-f="all" class="nav__tab" tabindex="0">All</li>
           <li id="activeTasks" data-f="active" class="nav__tab" tabindex="0">Active</li>
           <li id="doneTasks" data-f="done" class="nav__tab" tabindex="0">Done</li>
         </ul>
       </nav>
-
     </header>
-
     <section class="add-container">
       <label for="inputTask" class="input-label">New task</label>  
       <textarea id="inputTask" class="todo-input" aria-label="Enter a new todo task" placeholder="Enter a new task..."></textarea>   
       <button type="button" class="add-button">ADD</button>
     </section>
-
+    <h2 class="visually-hidden">List of your to-do tasks</h2>
     <ul id="todoList" class="todo-list"></ul>    
   </div>
 
-  <script src="./app/src/search.js"></script>
   <script src="./app/src/todo.js"></script>
   </body>
 </html>
