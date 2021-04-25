@@ -164,7 +164,8 @@ function renderTodo(todo) {
   const isActive = todo.done ? '' : 'todo--active';
   const isImportant = todo.important ? 'todo--important' : '';    
   const btnImportantColor = todo.important ? 'btn-importance--not' : '';
-  const btnImportantText = todo.important ? 'Not important' : 'Make important'
+  const btnImportantText = todo.important ? 'Not important' : 'Make important';
+  const todoTextStyle = todo.important ? 'todo_text--important' : '';
 
 
   // Create an `li` element and assign it to `node`
@@ -182,7 +183,7 @@ function renderTodo(todo) {
       <button type ="buttom" class="btn-importance ${btnImportantColor}" tabindex="0">${btnImportantText}</button>
       <button type ="buttom" class="btn-delete" tabindex="0" aria-label="Delete to-do"></button>
     </div>
-    <span class="todo_text">${todo.text}</span>    
+    <span class="todo_text ${todoTextStyle}">${todo.text}</span>    
   `;
 	
   // If the item already exists in the DOM
